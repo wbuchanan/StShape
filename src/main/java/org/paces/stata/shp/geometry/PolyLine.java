@@ -1,6 +1,6 @@
-package org.paces.stata.shp.geometry.PolyLine;
+package org.paces.stata.shp.geometry;
 
-import org.paces.stata.shp.geometry.Point.Point;
+import org.paces.stata.shp.geometry.Point;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

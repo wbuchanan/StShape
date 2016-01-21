@@ -1,6 +1,4 @@
-package org.paces.stata.shp.geometry.MultiPoint;
-
-import org.paces.stata.shp.geometry.Point.Point;
+package org.paces.stata.shp.geometry;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
