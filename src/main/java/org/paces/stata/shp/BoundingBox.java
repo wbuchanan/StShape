@@ -22,14 +22,14 @@ public class BoundingBox {
 		this.box.add(3, ymax);
 	}
 
-	BoundingBox(ByteBuffer bytes, Integer pts) {
+	public BoundingBox(ByteBuffer bytes, Integer pts) {
 		bytes.order(ByteOrder.LITTLE_ENDIAN);
 		for(int i = 0; i < pts; i++) {
 			this.box.add(i, bytes.getDouble());
 		}
 	}
 
-	BoundingBox(List<Point> points) {
+	public BoundingBox(List<Point> points) {
 		this.box.add(0, points.get(0).getLon());
 		this.box.add(1, points.get(0).getLat());
 		this.box.add(2, points.get(1).getLon());

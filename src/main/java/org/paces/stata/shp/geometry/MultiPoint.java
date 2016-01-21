@@ -1,7 +1,9 @@
 package org.paces.stata.shp.geometry;
 
+import org.paces.stata.shp.BoundingBox;
+import org.paces.stata.shp.ShapeFileReader;
+
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,26 +12,35 @@ import java.util.List;
  */
 public class MultiPoint {
 
-	private final Double x0, y0, x1, y1;
+	private BoundingBox bbox;
+	private Integer nPoints;
+	private List<Point> points = new ArrayList<Point>();
 
-	private final Integer nPoints;
+	private Double z = null;
+	private Double m = null;
 
-	private final List<Point> points = new ArrayList<Point>();
 
-	public MultiPoint(List<List<byte[]>> MultiPoints) {
-		this.x0 = ByteBuffer.wrap(MultiPoints.get(0).get(0)).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-		this.y0 = ByteBuffer.wrap(MultiPoints.get(0).get(1)).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-		this.x1 = ByteBuffer.wrap(MultiPoints.get(0).get(2)).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-		this.y1 = ByteBuffer.wrap(MultiPoints.get(0).get(3)).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-		this.nPoints = ByteBuffer.wrap(MultiPoints.get(0).get(4)).order(ByteOrder.LITTLE_ENDIAN).getInt();
-		this.points.add(new Point(MultiPoints.get(1)));
+
+
+	public MultiPoint(ByteBuffer multiPoints) {
+		multiPoints.order(ShapeFileReader.LSF);
+		this.bbox = new BoundingBox(multiPoints, 4);
+		this.nPoints = multiPoints.getInt();
 	}
 
-	public Double[] getBoundingBox() {
-		return new Double[] {this.x0, this.y0, this.x1, this.y1};
+	public void setPoints(ByteBuffer bufferPoints, Integer numberOfPoints) {
+		for(int i = 0; i < numberOfPoints; i++) {
+			points.add(i, new Point(bufferPoints));
+		}
+	}
+
+
+	public BoundingBox getBoundingBox() {
+		return this.bbox;
 	}
 
 	public Integer getNumPoints() {
+
 		return this.nPoints;
 	}
 

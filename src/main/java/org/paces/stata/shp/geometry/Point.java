@@ -1,5 +1,7 @@
 package org.paces.stata.shp.geometry;
 
+import org.paces.stata.shp.ShapeFileReader;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.List;
@@ -22,6 +24,12 @@ public class Point {
 		this.x = ByteBuffer.wrap(PointBytes.get(0)).order(ByteOrder.LITTLE_ENDIAN).getDouble();
 		this.y = ByteBuffer.wrap(PointBytes.get(1)).order(ByteOrder.LITTLE_ENDIAN).getDouble();
 
+	}
+
+	public Point(ByteBuffer pbuff) {
+		pbuff.order(ShapeFileReader.LSF);
+		this.x = pbuff.getDouble();
+		this.y = pbuff.getDouble();
 	}
 
 	public Point(Double x, Double y) {

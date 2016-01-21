@@ -30,7 +30,7 @@ public class ShapeFileReader {
 			RandomAccessFile raf = new RandomAccessFile(new File(args[0]), "rw");
 			FileChannel fc = raf.getChannel();
 			this.shapeFile = fc.map(FileChannel.MapMode.READ_WRITE, 0, fc.size());
-			parseFileHeader();
+			parseFileHeader(this.shapeFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
